@@ -7,54 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #080604;
-    --bg2: #110d08;
-    --bg3: #1a1208;
-    --amber: #F59E0B;
-    --gold: #e8b84b;
-    --copper: #c97f3a;
-    --glow: #f59e0b55;
-    --glow2: #c97f3a33;
-    --text: #f5e6c8;
-    --muted: #8a7055;
-    --border: #3a2810;
+    --bg: #080604; --bg2: #110d08; --bg3: #1a1208;
+    --amber: #F59E0B; --gold: #e8b84b; --copper: #c97f3a;
+    --glow: #f59e0b55; --glow2: #c97f3a33;
+    --text: #f5e6c8; --muted: #8a7055; --border: #3a2810;
     --glass: rgba(245,158,11,0.06);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
+    content: ''; position: fixed; inset: 0;
+    background-image: linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none; z-index: 0;
   }
-
-  /* HEADER */
   header {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px 32px;
-    border-bottom: 1px solid var(--border);
+    position: relative; z-index: 10;
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 32px; border-bottom: 1px solid var(--border);
     background: linear-gradient(180deg, rgba(245,158,11,0.07) 0%, transparent 100%);
   }
   .logo-img { width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(245,158,11,0.5)); }
   .brand-name {
-    font-family: 'Orbitron', monospace;
-    font-size: 22px; font-weight: 900; letter-spacing: 2px;
+    font-family: 'Orbitron', monospace; font-size: 22px; font-weight: 900; letter-spacing: 2px;
     background: linear-gradient(135deg, var(--amber) 0%, var(--gold) 50%, var(--copper) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
@@ -64,33 +38,22 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
   .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
   .status-text { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
-
-  /* MAIN */
   .main {
     position: relative; z-index: 10;
-    display: grid;
-    grid-template-columns: 1fr 1fr 320px;
-    gap: 24px;
-    padding: 28px 32px;
-    max-width: 1400px;
-    margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr 320px;
+    gap: 24px; padding: 28px 32px; max-width: 1400px; margin: 0 auto;
   }
-
   .section-label {
-    font-family: 'Orbitron', monospace;
-    font-size: 9px; letter-spacing: 3px; color: var(--copper);
-    text-transform: uppercase; margin-bottom: 12px;
+    font-family: 'Orbitron', monospace; font-size: 9px; letter-spacing: 3px;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 12px;
     display: flex; align-items: center; gap: 8px;
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
-
-  /* UPLOAD */
   .upload-zone {
-    min-height: 380px;
-    border: 1.5px dashed var(--border); border-radius: 12px;
-    background: var(--glass);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+    min-height: 380px; border: 1.5px dashed var(--border); border-radius: 12px;
+    background: var(--glass); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px;
+    cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
   }
   .upload-zone:hover { border-color: var(--copper); box-shadow: 0 0 20px var(--glow2); }
   .upload-zone.has-image { border-color: var(--amber); border-style: solid; }
@@ -106,14 +69,10 @@
   .upload-btn:hover { background: var(--glow2); }
   #preview-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: none; }
   #file-input { display: none; }
-
-  /* RESULT */
   .result-zone {
-    min-height: 380px;
-    border: 1.5px solid var(--border); border-radius: 12px;
-    background: var(--glass);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 12px; position: relative; overflow: hidden;
+    min-height: 380px; border: 1.5px solid var(--border); border-radius: 12px;
+    background: var(--glass); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px; position: relative; overflow: hidden;
   }
   .result-zone::after {
     content: 'PREVIEW'; position: absolute; top: 12px; right: 12px;
@@ -123,85 +82,46 @@
   .result-placeholder { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   .result-placeholder-icon { font-size: 48px; opacity: 0.3; filter: grayscale(1); }
   .result-placeholder-text { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-align: center; }
-
-  /* SIDEBAR */
   .sidebar { display: flex; flex-direction: column; gap: 18px; }
-
-  /* SELECT DROPDOWN */
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
   .styled-select {
-    width: 100%;
-    padding: 12px 16px;
-    background: var(--bg2);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
+    width: 100%; padding: 12px 16px;
+    background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px;
+    color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px;
+    cursor: pointer; appearance: none; -webkit-appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7055' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
-    transition: all 0.2s;
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 36px; transition: all 0.2s;
   }
-  .styled-select:focus {
-    outline: none;
-    border-color: var(--amber);
-    box-shadow: 0 0 12px var(--glow);
-  }
+  .styled-select:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 12px var(--glow); }
   .styled-select option { background: #1a1208; color: var(--text); }
-
-  /* SELECTION DISPLAY */
-  .selection-display {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px;
-  }
+  .selection-display { background: var(--glass); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
   .selection-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 11px; color: var(--muted); }
   .selection-val { color: var(--amber); font-weight: 500; font-size: 12px; max-width: 160px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  /* GENERATE BTN */
   .generate-btn {
-    width: 100%; padding: 16px;
-    border: none; border-radius: 10px;
+    width: 100%; padding: 16px; border: none; border-radius: 10px;
     background: linear-gradient(135deg, var(--copper) 0%, var(--amber) 100%);
-    color: #0a0604;
-    font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700; letter-spacing: 2px;
-    cursor: pointer; transition: all 0.3s;
+    color: #0a0604; font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; cursor: pointer; transition: all 0.3s;
     box-shadow: 0 4px 20px rgba(245,158,11,0.3);
   }
   .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.5); }
   .generate-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  /* LOADING */
   .loading-bar { width: 100%; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; display: none; }
   .loading-bar.active { display: block; }
   .loading-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--copper), var(--amber), var(--copper));
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    width: 40%; border-radius: 2px;
+    height: 100%; background: linear-gradient(90deg, var(--copper), var(--amber), var(--copper));
+    background-size: 200% 100%; animation: shimmer 1.5s infinite; width: 40%; border-radius: 2px;
   }
   @keyframes shimmer { 0%{background-position:-200% 0;margin-left:-40%} 100%{background-position:200% 0;margin-left:100%} }
-
-  /* SAVE */
   .save-btn {
-    width: 100%; padding: 10px;
-    border: 1px solid var(--border); border-radius: 8px;
-    background: transparent; color: var(--muted);
-    font-family: 'Outfit', sans-serif; font-size: 12px; letter-spacing: 1px;
-    cursor: pointer; transition: all 0.2s; display: none;
+    width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px;
+    background: transparent; color: var(--muted); font-family: 'Outfit', sans-serif;
+    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; display: none;
   }
   .save-btn.visible { display: block; }
   .save-btn:hover { border-color: var(--copper); color: var(--text); }
-
-  /* TOAST */
   .toast {
     position: fixed; bottom: 32px; right: 32px;
     background: var(--bg3); border: 1px solid var(--amber); border-radius: 8px;
@@ -210,7 +130,6 @@
     z-index: 1000; transform: translateY(20px); opacity: 0; transition: all 0.3s;
   }
   .toast.show { transform: translateY(0); opacity: 1; }
-
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -232,7 +151,6 @@
 
 <div class="main">
 
-  <!-- UPLOAD -->
   <div>
     <div class="section-label">01 — Foto Cliente</div>
     <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
@@ -246,7 +164,6 @@
     <input type="file" id="file-input" accept="image/*">
   </div>
 
-  <!-- RESULT -->
   <div>
     <div class="section-label">03 — Anteprima AI</div>
     <div class="result-zone">
@@ -256,11 +173,10 @@
         <div class="result-placeholder-text">Il risultato<br>apparirà qui</div>
       </div>
     </div>
-    <div class="loading-bar" id="loading-bar"><div class="loading-bar-fill"></div></div>
+    <div class="loading-bar" id="loading-bar-side"><div class="loading-bar-fill"></div></div>
     <button class="save-btn" id="save-btn" onclick="saveImage()">💾 &nbsp; Salva immagine sul dispositivo</button>
   </div>
 
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="section-label">02 — Seleziona Stile</div>
 
@@ -268,51 +184,51 @@
       <div class="field-label">Taglio</div>
       <select class="styled-select" id="select-style" onchange="onStyleChange()">
         <option value="">— Scegli taglio —</option>
-        <option value="Straight">Liscio</option>
-        <option value="Wavy">Ondulato</option>
-        <option value="Curly">Riccio</option>
+        <option value="Straight">Straight</option>
+        <option value="Wavy">Wavy</option>
+        <option value="Curly">Curly</option>
         <option value="Bob">Bob</option>
         <option value="Pixie Cut">Pixie Cut</option>
-        <option value="Layered">Scalato</option>
-        <option value="Messy Bun">Chignon Disordinato</option>
-        <option value="High Ponytail">Coda Alta</option>
-        <option value="Low Ponytail">Coda Bassa</option>
-        <option value="Braided Ponytail">Coda Intrecciata</option>
-        <option value="French Braid">Treccia Francese</option>
-        <option value="Dutch Braid">Treccia Olandese</option>
-        <option value="Fishtail Braid">Treccia a Spina di Pesce</option>
-        <option value="Space Buns">Bun Doppio</option>
-        <option value="Top Knot">Chignon Alto</option>
+        <option value="Layered">Layered</option>
+        <option value="Messy Bun">Messy Bun</option>
+        <option value="High Ponytail">High Ponytail</option>
+        <option value="Low Ponytail">Low Ponytail</option>
+        <option value="Braided Ponytail">Braided Ponytail</option>
+        <option value="French Braid">French Braid</option>
+        <option value="Dutch Braid">Dutch Braid</option>
+        <option value="Fishtail Braid">Fishtail Braid</option>
+        <option value="Space Buns">Space Buns</option>
+        <option value="Top Knot">Top Knot</option>
         <option value="Undercut">Undercut</option>
         <option value="Mohawk">Mohawk</option>
         <option value="Crew Cut">Crew Cut</option>
         <option value="Faux Hawk">Faux Hawk</option>
-        <option value="Slicked Back">Capelli all'Indietro</option>
-        <option value="Side-Parted">Riga di Lato</option>
-        <option value="Center-Parted">Riga in Mezzo</option>
-        <option value="Blunt Bangs">Frangia Dritta</option>
-        <option value="Side-Swept Bangs">Frangia di Lato</option>
+        <option value="Slicked Back">Slicked Back</option>
+        <option value="Side-Parted">Side-Parted</option>
+        <option value="Center-Parted">Center-Parted</option>
+        <option value="Blunt Bangs">Blunt Bangs</option>
+        <option value="Side-Swept Bangs">Side-Swept Bangs</option>
         <option value="Shag">Shag</option>
-        <option value="Lob">Lob (Long Bob)</option>
-        <option value="Angled Bob">Bob Angolato</option>
-        <option value="A-Line Bob">Bob a A</option>
-        <option value="Asymmetrical Bob">Bob Asimmetrico</option>
-        <option value="Graduated Bob">Bob Scalato</option>
-        <option value="Inverted Bob">Bob Invertito</option>
-        <option value="Layered Shag">Shag Scalato</option>
-        <option value="Choppy Layers">Strati Spezzati</option>
-        <option value="Razor Cut">Taglio Rasoio</option>
-        <option value="Perm">Permanente</option>
+        <option value="Lob">Lob</option>
+        <option value="Angled Bob">Angled Bob</option>
+        <option value="A-Line Bob">A-Line Bob</option>
+        <option value="Asymmetrical Bob">Asymmetrical Bob</option>
+        <option value="Graduated Bob">Graduated Bob</option>
+        <option value="Inverted Bob">Inverted Bob</option>
+        <option value="Layered Shag">Layered Shag</option>
+        <option value="Choppy Layers">Choppy Layers</option>
+        <option value="Razor Cut">Razor Cut</option>
+        <option value="Perm">Perm</option>
         <option value="Ombré">Ombré</option>
-        <option value="Straightened">Stirato</option>
-        <option value="Soft Waves">Onde Morbide</option>
-        <option value="Glamorous Waves">Onde Glamour</option>
-        <option value="Hollywood Waves">Onde Hollywood</option>
+        <option value="Straightened">Straightened</option>
+        <option value="Soft Waves">Soft Waves</option>
+        <option value="Glamorous Waves">Glamorous Waves</option>
+        <option value="Hollywood Waves">Hollywood Waves</option>
         <option value="Finger Waves">Finger Waves</option>
-        <option value="Tousled">Spettinato</option>
-        <option value="Feathered">Piume</option>
+        <option value="Tousled">Tousled</option>
+        <option value="Feathered">Feathered</option>
         <option value="Pageboy">Pageboy</option>
-        <option value="Pigtails">Codini</option>
+        <option value="Pigtails">Pigtails</option>
         <option value="Pin Curls">Pin Curls</option>
         <option value="Rollerset">Rollerset</option>
         <option value="Twist Out">Twist Out</option>
@@ -321,46 +237,46 @@
         <option value="Cornrows">Cornrows</option>
         <option value="Box Braids">Box Braids</option>
         <option value="Crochet Braids">Crochet Braids</option>
-        <option value="Double Dutch Braids">Trecce Dutch Doppie</option>
-        <option value="French Fishtail Braid">Treccia Francese a Spina di Pesce</option>
-        <option value="Waterfall Braid">Treccia Cascata</option>
-        <option value="Rope Braid">Treccia Corda</option>
-        <option value="Heart Braid">Treccia a Cuore</option>
-        <option value="Halo Braid">Treccia Halo</option>
-        <option value="Crown Braid">Treccia Corona</option>
-        <option value="Braided Crown">Corona Intrecciata</option>
-        <option value="Bubble Braid">Treccia Bubble</option>
-        <option value="Bubble Ponytail">Coda Bubble</option>
-        <option value="Ballerina Braids">Trecce da Ballerina</option>
-        <option value="Milkmaid Braids">Trecce Milkmaid</option>
-        <option value="Bohemian Braids">Trecce Bohemian</option>
-        <option value="Flat Twist">Twist Piatto</option>
-        <option value="Crown Twist">Twist Corona</option>
-        <option value="Twisted Bun">Bun Attorcigliato</option>
-        <option value="Twisted Half-Updo">Mezzo Raccolto Attorcigliato</option>
-        <option value="Twist and Pin Updo">Twist e Fermaglio</option>
+        <option value="Double Dutch Braids">Double Dutch Braids</option>
+        <option value="French Fishtail Braid">French Fishtail Braid</option>
+        <option value="Waterfall Braid">Waterfall Braid</option>
+        <option value="Rope Braid">Rope Braid</option>
+        <option value="Heart Braid">Heart Braid</option>
+        <option value="Halo Braid">Halo Braid</option>
+        <option value="Crown Braid">Crown Braid</option>
+        <option value="Braided Crown">Braided Crown</option>
+        <option value="Bubble Braid">Bubble Braid</option>
+        <option value="Bubble Ponytail">Bubble Ponytail</option>
+        <option value="Ballerina Braids">Ballerina Braids</option>
+        <option value="Milkmaid Braids">Milkmaid Braids</option>
+        <option value="Bohemian Braids">Bohemian Braids</option>
+        <option value="Flat Twist">Flat Twist</option>
+        <option value="Crown Twist">Crown Twist</option>
+        <option value="Twisted Bun">Twisted Bun</option>
+        <option value="Twisted Half-Updo">Twisted Half-Updo</option>
+        <option value="Twist and Pin Updo">Twist and Pin Updo</option>
         <option value="Chignon">Chignon</option>
-        <option value="Simple Chignon">Chignon Semplice</option>
-        <option value="Messy Chignon">Chignon Disordinato</option>
-        <option value="French Twist">Chignon Francese</option>
-        <option value="French Twist Updo">Raccolto Francese</option>
-        <option value="French Roll">Rotolo Francese</option>
-        <option value="Updo">Raccolto</option>
-        <option value="Messy Updo">Raccolto Disordinato</option>
-        <option value="Knotted Updo">Raccolto Annodato</option>
-        <option value="Ballerina Bun">Bun da Ballerina</option>
-        <option value="Banana Clip Updo">Raccolto con Fermaglio</option>
-        <option value="Beehive">Alveare</option>
+        <option value="Simple Chignon">Simple Chignon</option>
+        <option value="Messy Chignon">Messy Chignon</option>
+        <option value="French Twist">French Twist</option>
+        <option value="French Twist Updo">French Twist Updo</option>
+        <option value="French Roll">French Roll</option>
+        <option value="Updo">Updo</option>
+        <option value="Messy Updo">Messy Updo</option>
+        <option value="Knotted Updo">Knotted Updo</option>
+        <option value="Ballerina Bun">Ballerina Bun</option>
+        <option value="Banana Clip Updo">Banana Clip Updo</option>
+        <option value="Beehive">Beehive</option>
         <option value="Bouffant">Bouffant</option>
-        <option value="Hair Bow">Fiocco di Capelli</option>
-        <option value="Half-Up Top Knot">Mezzo Chignon Alto</option>
-        <option value="Half-Up, Half-Down">Mezzo Raccolto</option>
-        <option value="Messy Bun with a Headband">Bun con Cerchietto</option>
-        <option value="Messy Bun with a Scarf">Bun con Foulard</option>
-        <option value="Messy Fishtail Braid">Treccia a Spina Disordinata</option>
-        <option value="Sideswept Pixie">Pixie Laterale</option>
-        <option value="Mohawk Fade">Mohawk Sfumato</option>
-        <option value="Zig-Zag Part">Riga a Zig-Zag</option>
+        <option value="Hair Bow">Hair Bow</option>
+        <option value="Half-Up Top Knot">Half-Up Top Knot</option>
+        <option value="Half-Up, Half-Down">Half-Up, Half-Down</option>
+        <option value="Messy Bun with a Headband">Messy Bun with a Headband</option>
+        <option value="Messy Bun with a Scarf">Messy Bun with a Scarf</option>
+        <option value="Messy Fishtail Braid">Messy Fishtail Braid</option>
+        <option value="Sideswept Pixie">Sideswept Pixie</option>
+        <option value="Mohawk Fade">Mohawk Fade</option>
+        <option value="Zig-Zag Part">Zig-Zag Part</option>
         <option value="Victory Rolls">Victory Rolls</option>
       </select>
     </div>
@@ -369,36 +285,36 @@
       <div class="field-label">Colore</div>
       <select class="styled-select" id="select-color" onchange="onColorChange()">
         <option value="">— Scegli colore —</option>
-        <option value="No change">Nessun cambio</option>
-        <option value="Blonde">Biondo</option>
-        <option value="Brunette">Bruno</option>
-        <option value="Black">Nero</option>
-        <option value="Dark Brown">Castano Scuro</option>
-        <option value="Medium Brown">Castano Medio</option>
-        <option value="Light Brown">Castano Chiaro</option>
-        <option value="Auburn">Ramato</option>
-        <option value="Copper">Rame</option>
-        <option value="Red">Rosso</option>
-        <option value="Strawberry Blonde">Biondo Fragola</option>
-        <option value="Platinum Blonde">Biondo Platino</option>
-        <option value="Silver">Argento</option>
-        <option value="White">Bianco</option>
-        <option value="Blue">Blu</option>
-        <option value="Purple">Viola</option>
-        <option value="Pink">Rosa</option>
-        <option value="Green">Verde</option>
-        <option value="Blue-Black">Nero Blu</option>
-        <option value="Golden Blonde">Biondo Dorato</option>
-        <option value="Honey Blonde">Biondo Miele</option>
-        <option value="Caramel">Caramello</option>
-        <option value="Chestnut">Castano</option>
-        <option value="Mahogany">Mogano</option>
-        <option value="Burgundy">Borgogna</option>
-        <option value="Jet Black">Nero Corvino</option>
-        <option value="Ash Brown">Castano Cenere</option>
-        <option value="Ash Blonde">Biondo Cenere</option>
-        <option value="Titanium">Titanio</option>
-        <option value="Rose Gold">Oro Rosa</option>
+        <option value="No change">No change</option>
+        <option value="Blonde">Blonde</option>
+        <option value="Brunette">Brunette</option>
+        <option value="Black">Black</option>
+        <option value="Dark Brown">Dark Brown</option>
+        <option value="Medium Brown">Medium Brown</option>
+        <option value="Light Brown">Light Brown</option>
+        <option value="Auburn">Auburn</option>
+        <option value="Copper">Copper</option>
+        <option value="Red">Red</option>
+        <option value="Strawberry Blonde">Strawberry Blonde</option>
+        <option value="Platinum Blonde">Platinum Blonde</option>
+        <option value="Silver">Silver</option>
+        <option value="White">White</option>
+        <option value="Blue">Blue</option>
+        <option value="Purple">Purple</option>
+        <option value="Pink">Pink</option>
+        <option value="Green">Green</option>
+        <option value="Blue-Black">Blue-Black</option>
+        <option value="Golden Blonde">Golden Blonde</option>
+        <option value="Honey Blonde">Honey Blonde</option>
+        <option value="Caramel">Caramel</option>
+        <option value="Chestnut">Chestnut</option>
+        <option value="Mahogany">Mahogany</option>
+        <option value="Burgundy">Burgundy</option>
+        <option value="Jet Black">Jet Black</option>
+        <option value="Ash Brown">Ash Brown</option>
+        <option value="Ash Blonde">Ash Blonde</option>
+        <option value="Titanium">Titanium</option>
+        <option value="Rose Gold">Rose Gold</option>
       </select>
     </div>
 
@@ -422,25 +338,20 @@ let resultDataUrl = null;
 
 function onStyleChange() {
   const sel = document.getElementById('select-style');
-  const opt = sel.options[sel.selectedIndex];
-  document.getElementById('sel-style').textContent = opt.text || '—';
+  document.getElementById('sel-style').textContent = sel.value || '—';
   checkReady();
 }
-
 function onColorChange() {
   const sel = document.getElementById('select-color');
-  const opt = sel.options[sel.selectedIndex];
-  document.getElementById('sel-color').textContent = opt.text || '—';
+  document.getElementById('sel-color').textContent = sel.value || '—';
   checkReady();
 }
-
 function checkReady() {
   const style = document.getElementById('select-style').value;
   const color = document.getElementById('select-color').value;
   document.getElementById('generate-btn').disabled = !(style && color && uploadedFile);
 }
 
-// FILE UPLOAD
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', e => {
   const file = e.target.files[0];
@@ -459,7 +370,6 @@ fileInput.addEventListener('change', e => {
   reader.readAsDataURL(file);
 });
 
-// DRAG & DROP
 const zone = document.getElementById('upload-zone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragging'); });
 zone.addEventListener('dragleave', () => zone.classList.remove('dragging'));
@@ -485,18 +395,15 @@ async function generate() {
 
   try {
     const base64 = await fileToBase64(uploadedFile);
-
     const startRes = await fetch('/api/genera', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ imageBase64: base64, haircutStyle, hairColor }),
     });
-
     const startData = await startRes.json();
     if (startData.error) throw new Error(startData.error);
 
     showToast('⏳ AI al lavoro... attendi qualche secondo');
-
     const result = await pollStatus(startData.id);
 
     bar.classList.remove('active');
@@ -514,9 +421,7 @@ async function generate() {
     document.getElementById('save-btn').classList.add('visible');
     resultDataUrl = outputUrl;
 
-    const styleName = document.getElementById('select-style').options[document.getElementById('select-style').selectedIndex].text;
-    const colorName = document.getElementById('select-color').options[document.getElementById('select-color').selectedIndex].text;
-    showToast(`✨ ${styleName} · ${colorName}`);
+    showToast(`✨ ${haircutStyle} · ${hairColor}`);
 
   } catch (err) {
     bar.classList.remove('active');
