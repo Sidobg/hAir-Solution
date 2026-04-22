@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hAIr Solution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080604;
+    --bg2: #110d08;
+    --bg3: #1a1208;
+    --amber: #F59E0B;
+    --gold: #e8b84b;
+    --copper: #c97f3a;
+    --glow: #f59e0b55;
+    --glow2: #c97f3a33;
+    --text: #f5e6c8;
+    --muted: #8a7055;
+    --border: #3a2810;
+    --glass: rgba(245,158,11,0.06);
+    --glass2: rgba(201,127,58,0.08);
+    --danger: #e05c3a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== GRID BACKGROUND ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== RADIAL GLOW BG ===== */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(245,158,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(245,158,11,0.07) 0%, transparent 100%);
+  }
+
+  .logo-img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(245,158,11,0.5));
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--gold) 50%, var(--copper) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    line-height: 1;
+  }
+
+  .brand-name span {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+  }
+
+  .brand-sub {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3adb76;
+    box-shadow: 0 0 8px #3adb76;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status-text {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ===== MAIN LAYOUT ===== */
+  .main {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    gap: 20px;
+    padding: 24px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ===== SECTION LABELS ===== */
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--copper);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ===== UPLOAD PANEL ===== */
+  .upload-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upload-zone {
+    flex: 1;
+    min-height: 320px;
+    border: 1.5px dashed var(--border);
+    border-radius: 12px;
+    background: var(--glass);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upload-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--glow2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .upload-zone:hover {
+    border-color: var(--copper);
+    box-shadow: 0 0 20px var(--glow2), inset 0 0 30px var(--glow2);
+  }
+
+  .upload-zone:hover::before { opacity: 1; }
+
+  .upload-zone.has-image {
+    border-color: var(--amber);
+    border-style: solid;
+  }
+
+  .upload-zone.dragging {
+    border-color: var(--amber);
+    box-shadow: 0 0 30px var(--glow);
+  }
+
+  .upload-icon {
+    font-size: 42px;
+    filter: drop-shadow(0 0 8px var(--copper));
+  }
+
+  .upload-text {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .upload-text strong {
+    display: block;
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .upload-btn {
+    padding: 8px 20px;
+    border: 1px solid var(--copper);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--copper);
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .upload-btn:hover {
+    background: var(--glass2);
+    box-shadow: 0 0 12px var(--glow2);
+  }
+
+  #preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: none;
+  }
+
+  #file-input { display: none; }
+
+  /* ===== RESULT PANEL ===== */
+  .result-panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .result-zone {
+    flex: 1;
+    min-height: 320px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    background: var(--glass);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-zone::after {
+    content: 'PREVIEW';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: 'Orbitron', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--border);
+  }
+
+  .result-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .result-placeholder-icon {
+    font-size: 48px;
+    opacity: 0.3;
+    filter: grayscale(1);
+  }
+
+  .result-placeholder-text {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  #result-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: none;
+  }
+
+  /* ===== SAVE BUTTON ===== */
+  .save-btn {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: none;
+  }
+
+  .save-btn.visible {
+    display: block;
+  }
+
+  .save-btn:hover {
+    border-color: var(--copper);
+    color: var(--text);
+  }
+
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ===== COLOR PALETTE ===== */
+  .color-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .color-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .color-swatch::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  .color-swatch:hover::after { opacity: 1; }
+
+  .color-swatch:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 12px currentColor;
+  }
+
+  .color-swatch.selected {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px var(--glow);
+    transform: scale(1.1);
+  }
+
+  /* ===== SELECTED DISPLAY ===== */
+  .selection-display {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .selection-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .selection-val {
+    color: var(--amber);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  /* ===== GENERATE BUTTON ===== */
+  .generate-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--copper) 0%, var(--amber) 100%);
+    color: #0a0604;
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(245,158,11,0.3);
+  }
+
+  .generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(245,158,11,0.5);
+  }
+
+  .generate-btn:hover::before { opacity: 1; }
+
+  .generate-btn:active {
+    transform: translateY(0);
+  }
+
+  .generate-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ===== LOADING ===== */
+  .loading-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    display: none;
+  }
+
+  .loading-bar.active { display: block; }
+
+  .loading-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--copper), var(--amber), var(--copper));
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    width: 40%;
+    border-radius: 2px;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; margin-left: -40%; }
+    100% { background-position: 200% 0; margin-left: 100%; }
+  }
+
+  /* ===== HAIRSTYLES SECTION (FULL WIDTH) ===== */
+  .styles-section {
+    position: relative;
+    z-index: 10;
+    padding: 0 32px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .styles-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .style-card {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--glass);
+    position: relative;
+  }
+
+  .style-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(245,158,11,0.15) 100%);
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 1;
+  }
+
+  .style-card:hover {
+    border-color: var(--copper);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 15px var(--glow2);
+  }
+
+  .style-card:hover::before { opacity: 1; }
+
+  .style-card.selected {
+    border-color: var(--amber);
+    box-shadow: 0 0 20px var(--glow), 0 0 0 1px var(--amber);
+  }
+
+  .style-card.selected::before { opacity: 1; }
+
+  .style-thumb {
+    width: 100%;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .style-thumb svg {
+    width: 70%;
+    height: 70%;
+    opacity: 0.7;
+  }
+
+  .style-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .style-num {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    z-index: 2;
+  }
+
+  .style-card.selected .style-num {
+    color: var(--amber);
+  }
+
+  .check-mark {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--amber);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #000;
+    z-index: 2;
+    box-shadow: 0 0 8px var(--glow);
+  }
+
+  .style-card.selected .check-mark {
+    display: flex;
+  }
+
+  .style-info {
+    padding: 8px 10px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .style-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.5px;
+  }
+
+  .style-desc {
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: var(--bg3);
+    border: 1px solid var(--amber);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 13px;
+    color: var(--text);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 20px var(--glow);
+    z-index: 1000;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 32px 24px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <img class="logo-img" src="data:image/jpeg;base64,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" alt="Logo">
+  <div class="brand">
+    <div class="brand-name">h<span>AI</span>r Solution</div>
+    <div class="brand-sub">AI Hair Transformation Studio</div>
+  </div>
+  <div class="header-right">
+    <div class="status-dot"></div>
+    <span class="status-text">AI READY</span>
+  </div>
+</header>
+
+<!-- MAIN GRID -->
+<div class="main">
+
+  <!-- UPLOAD -->
+  <div class="upload-panel">
+    <div class="section-label">01 — Foto Cliente</div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+      <img id="preview-img" alt="Preview">
+      <div id="upload-placeholder">
+        <div class="upload-icon">📷</div>
+        <div class="upload-text">
+          <strong>Carica foto cliente</strong>
+          JPG · PNG · WEBP
+        </div>
+        <button class="upload-btn" onclick="event.stopPropagation()">Sfoglia file</button>
+      </div>
+    </div>
+    <input type="file" id="file-input" accept="image/*">
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-panel">
+    <div class="section-label">03 — Anteprima AI</div>
+    <div class="result-zone">
+      <img id="result-img" alt="Risultato">
+      <div class="result-placeholder" id="result-placeholder">
+        <div class="result-placeholder-icon">✨</div>
+        <div class="result-placeholder-text">Il risultato<br>apparirà qui</div>
+      </div>
+    </div>
+    <div class="loading-bar" id="loading-bar">
+      <div class="loading-bar-fill"></div>
+    </div>
+    <button class="save-btn" id="save-btn" onclick="saveImage()">💾 &nbsp; Salva immagine sul dispositivo</button>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div>
+      <div class="section-label">02 — Colore</div>
+      <div class="color-grid" id="color-grid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+
+    <div class="selection-display">
+      <div class="selection-row">
+        <span>Taglio</span>
+        <span class="selection-val" id="sel-style">—</span>
+      </div>
+      <div class="selection-row">
+        <span>Colore</span>
+        <span class="selection-val" id="sel-color">—</span>
+      </div>
+      <div class="selection-row">
+        <span>Foto</span>
+        <span class="selection-val" id="sel-photo">—</span>
+      </div>
+    </div>
+
+    <button class="generate-btn" id="generate-btn" onclick="generate()" disabled>
+      ⚡ &nbsp; GENERA
+    </button>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div class="divider"></div>
+
+<!-- HAIRSTYLES GRID -->
+<div class="styles-section">
+  <div class="section-label">Scegli Acconciatura — 15 tagli disponibili</div>
+  <div class="styles-grid" id="styles-grid">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const COLORS = [
+  { name: "Biondo Platino",  hex: "#F5F0D0", prompt: "platinum blonde hair" },
+  { name: "Biondo Miele",    hex: "#D4A847", prompt: "honey blonde hair" },
+  { name: "Castano Dorato",  hex: "#8B5E3C", prompt: "golden brown hair" },
+  { name: "Castano Scuro",   hex: "#3D1C02", prompt: "dark chocolate brown hair" },
+  { name: "Nero",            hex: "#181008", prompt: "jet black hair", border:"#555" },
+  { name: "Rosso Ramato",    hex: "#B5451B", prompt: "copper red hair" },
+  { name: "Borgogna",        hex: "#6B1B2A", prompt: "burgundy wine hair" },
+  { name: "Rosa Pastello",   hex: "#F4A7B9", prompt: "pastel pink hair" },
+  { name: "Grigio Argento",  hex: "#B8B8C0", prompt: "silver grey hair" },
+  { name: "Biondo Cenere",   hex: "#C8BFA8", prompt: "ash blonde hair" },
+];
+
+const STYLES = [
+  { name: "Bob Classico",      desc: "Linea netta al mento",       prompt: "classic bob haircut" },
+  { name: "Bob Asimmetrico",   desc: "Corto-lungo, moderno",       prompt: "asymmetrical bob haircut" },
+  { name: "Pixie Cut",         desc: "Corto e definito",           prompt: "pixie cut short hair" },
+  { name: "Lob (Long Bob)",    desc: "Bob lungo alle spalle",      prompt: "long bob lob haircut" },
+  { name: "Shag Texture",      desc: "Scalato e texturizzato",     prompt: "shag textured haircut layers" },
+  { name: "Beach Waves",       desc: "Onde morbide effetto mare",  prompt: "beach waves long hair" },
+  { name: "Bixie",             desc: "Tra bob e pixie",            prompt: "bixie cut modern short bob" },
+  { name: "Curtain Bangs",     desc: "Frangia a tendina",          prompt: "curtain bangs medium length hair" },
+  { name: "Butterfly Cut",     desc: "Scalato a farfalla",         prompt: "butterfly cut layers face framing" },
+  { name: "Capelli Lisci",     desc: "Liscio lucido e diretto",    prompt: "sleek straight hair glossy" },
+  { name: "Capelli Ricci",     desc: "Ricci naturali definiti",    prompt: "natural curly hair defined curls" },
+  { name: "Wolf Cut",          desc: "Rock, voluminoso, scalato",  prompt: "wolf cut layered voluminous hair" },
+  { name: "Bun Elegante",      desc: "Raccolto alto sculturale",   prompt: "elegant high bun updo sleek" },
+  { name: "Half Up",           desc: "Metà raccolto, metà libero", prompt: "half up half down hairstyle" },
+  { name: "French Tuck Updo",  desc: "Raccolto morbido informale", prompt: "soft french tuck messy updo" },
+];
+
+let selectedStyle = null;
+let selectedColor = null;
+let uploadedFile = null;
+let resultDataUrl = null;
+
+// ---- ICONS (SVG placeholder per ogni taglio) ----
+const icons = [
+  // 15 SVG minimali che richiamano la sagoma del taglio
+  `<svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="40" cy="38" rx="22" ry="26" fill="#2a1a08"/><rect x="18" y="60" width="44" height="6" rx="3" fill="#3a2610"/><circle cx="40" cy="38" r="14" fill="#c97f3a" opacity=".2"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="38" rx="22" ry="26" fill="#2a1a08"/><path d="M18 62 Q50 68 62 56" stroke="#c97f3a" stroke-width="3" fill="none"/><circle cx="40" cy="38" r="14" fill="#c97f3a" opacity=".2"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="35" rx="18" ry="20" fill="#2a1a08"/><ellipse cx="40" cy="30" rx="14" ry="12" fill="#c97f3a" opacity=".25"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="40" rx="22" ry="30" fill="#2a1a08"/><rect x="18" y="68" width="44" height="5" rx="2.5" fill="#3a2610"/><circle cx="40" cy="38" r="15" fill="#c97f3a" opacity=".2"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="42" rx="24" ry="32" fill="#2a1a08"/><path d="M16 70 Q40 82 64 66" stroke="#c97f3a" stroke-width="2" fill="none"/><path d="M20 60 Q40 72 60 56" stroke="#c97f3a" stroke-width="1.5" fill="none" opacity=".5"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="20" ry="36" fill="#2a1a08"/><path d="M20 74 Q40 86 60 74" stroke="#c97f3a" stroke-width="2.5" fill="none"/><path d="M22 66 Q40 76 58 66" stroke="#c97f3a" stroke-width="1.5" fill="none" opacity=".6"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="36" rx="20" ry="22" fill="#2a1a08"/><path d="M20 56 Q40 64 60 52" stroke="#c97f3a" stroke-width="2.5" fill="none"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="42" rx="22" ry="30" fill="#2a1a08"/><path d="M24 24 Q40 30 56 22" stroke="#c97f3a" stroke-width="3" fill="none"/><circle cx="40" cy="42" r="13" fill="#c97f3a" opacity=".15"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="22" ry="34" fill="#2a1a08"/><path d="M18 62 Q28 72 40 66 Q52 60 62 70" stroke="#c97f3a" stroke-width="2" fill="none"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="20" ry="36" fill="#2a1a08"/><line x1="40" y1="8" x2="40" y2="82" stroke="#c97f3a" stroke-width="1" opacity=".3"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="20" ry="36" fill="#2a1a08"/><path d="M22 52 Q32 62 40 52 Q48 42 58 52 Q50 66 40 80 Q30 66 22 52Z" fill="#c97f3a" opacity=".15"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="24" ry="36" fill="#2a1a08"/><path d="M16 58 Q40 74 64 50" stroke="#c97f3a" stroke-width="2.5" fill="none"/><path d="M18 68 Q40 84 62 64" stroke="#c97f3a" stroke-width="1.5" fill="none" opacity=".5"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><circle cx="40" cy="28" r="16" fill="#2a1a08"/><circle cx="40" cy="28" r="10" fill="#c97f3a" opacity=".25"/><path d="M28 42 Q40 48 52 42" stroke="#c97f3a" stroke-width="2"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="44" rx="22" ry="34" fill="#2a1a08"/><path d="M22 30 Q40 36 58 28" stroke="#c97f3a" stroke-width="3" fill="none"/><circle cx="40" cy="22" r="8" fill="#3a2610"/></svg>`,
+  `<svg viewBox="0 0 80 100" fill="none"><ellipse cx="40" cy="42" rx="20" ry="30" fill="#2a1a08"/><path d="M28 20 Q34 28 40 22 Q46 16 52 24" stroke="#c97f3a" stroke-width="2" fill="none"/><circle cx="40" cy="16" r="6" fill="#3a2610"/></svg>`,
+];
+
+function buildColors() {
+  const grid = document.getElementById('color-grid');
+  COLORS.forEach((c, i) => {
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch';
+    sw.style.background = c.hex;
+    sw.style.border = `2px solid ${c.border || c.hex}`;
+    sw.setAttribute('data-name', c.name);
+    sw.onclick = () => selectColor(i, sw);
+    grid.appendChild(sw);
+  });
+}
+
+function buildStyles() {
+  const grid = document.getElementById('styles-grid');
+  STYLES.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'style-card';
+    card.id = `style-${i}`;
+    card.innerHTML = `
+      <div class="style-thumb">
+        ${icons[i]}
+        <div class="style-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="check-mark">✓</div>
+      </div>
+      <div class="style-info">
+        <div class="style-name">${s.name}</div>
+        <div class="style-desc">${s.desc}</div>
+      </div>
+    `;
+    card.onclick = () => selectStyle(i, card);
+    grid.appendChild(card);
+  });
+}
+
+function selectStyle(i, card) {
+  document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedStyle = i;
+  document.getElementById('sel-style').textContent = STYLES[i].name;
+  checkReady();
+}
+
+function selectColor(i, sw) {
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+  sw.classList.add('selected');
+  selectedColor = i;
+  document.getElementById('sel-color').textContent = COLORS[i].name;
+  checkReady();
+}
+
+function checkReady() {
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = !(selectedStyle !== null && selectedColor !== null && uploadedFile);
+}
+
+// FILE UPLOAD
+const fileInput = document.getElementById('file-input');
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  uploadedFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const img = document.getElementById('preview-img');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    document.getElementById('upload-placeholder').style.display = 'none';
+    document.getElementById('upload-zone').classList.add('has-image');
+    document.getElementById('sel-photo').textContent = '✓ Caricata';
+    checkReady();
+  };
+  reader.readAsDataURL(file);
+});
+
+// DRAG & DROP
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragging'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('dragging'));
+zone.addEventListener('drop', e => {
+  e.preventDefault();
+  zone.classList.remove('dragging');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    fileInput.dispatchEvent(new Event('change'));
+  }
+});
+
+// GENERATE (demo — simula loading)
+function generate() {
+  const btn = document.getElementById('generate-btn');
+  const bar = document.getElementById('loading-bar');
+  btn.disabled = true;
+  btn.textContent = '⏳  Elaborazione AI...';
+  bar.classList.add('active');
+
+  // Simula chiamata API (3s)
+  setTimeout(() => {
+    bar.classList.remove('active');
+    btn.disabled = false;
+    btn.innerHTML = '⚡ &nbsp; GENERA';
+
+    // Demo: mostra la stessa foto caricata con filtro colore (placeholder)
+    const src = document.getElementById('preview-img').src;
+    const resultImg = document.getElementById('result-img');
+    resultImg.src = src;
+    resultImg.style.display = 'block';
+    resultImg.style.filter = `hue-rotate(${Math.random()*60-30}deg) saturate(1.4)`;
+    document.getElementById('result-placeholder').style.display = 'none';
+    document.getElementById('save-btn').classList.add('visible');
+    resultDataUrl = src;
+
+    showToast(`✨ Generato: ${STYLES[selectedStyle].name} · ${COLORS[selectedColor].name}`);
+  }, 3000);
+}
+
+function saveImage() {
+  if (!resultDataUrl) return;
+  const a = document.createElement('a');
+  a.href = resultDataUrl;
+  a.download = `hAIr_result_${Date.now()}.jpg`;
+  a.click();
+  showToast('💾 Immagine salvata!');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+buildColors();
+buildStyles();
+</script>
+</body>
+</html>
