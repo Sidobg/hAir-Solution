@@ -1,3 +1,11 @@
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
+  },
+};
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -32,8 +40,8 @@ export default async function handler(req, res) {
 
     const prediction = await response.json();
 
-    if (prediction.error) {
-      return res.status(500).json({ error: prediction.error });
+    if (!response.ok) {
+      return res.status(500).json({ error: JSON.stringify(prediction) });
     }
 
     return res.status(200).json({ id: prediction.id });
