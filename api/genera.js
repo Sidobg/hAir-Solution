@@ -19,13 +19,14 @@ export default async function handler(req, res) {
   const prompt = `portrait photo of a woman img with ${stylePrompt}, ${colorPrompt}, photorealistic, high quality, professional salon photo, sharp focus`;
 
   try {
-    const response = await fetch("https://api.replicate.com/v1/models/tencentarc/photomaker/predictions", {
+    const response = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.REPLICATE_API_TOKEN}`,
+        "Authorization": `Token ${process.env.REPLICATE_API_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        version: "ddfc2b08d209f9fa8c1eca692712918bd449f695a2d35e9a59e52e34e23ad4e2",
         input: {
           prompt: prompt,
           input_image: imageBase64,
