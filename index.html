@@ -4,135 +4,233 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>hAIr Solution</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #080604; --bg2: #110d08; --bg3: #1a1208;
-    --amber: #F59E0B; --gold: #e8b84b; --copper: #c97f3a;
-    --glow: #f59e0b55; --glow2: #c97f3a33;
-    --text: #f5e6c8; --muted: #8a7055; --border: #3a2810;
-    --glass: rgba(245,158,11,0.06);
+    --bg:      #0c0c10;
+    --bg2:     #14141a;
+    --bg3:     #1c1c24;
+    --border:  #2a2a38;
+    --border2: #3a3a50;
+    --text:    #e8e8f0;
+    --muted:   #6b6b85;
+    --subtle:  #3a3a50;
+    --accent:  #818cf8;
+    --accent2: #a78bfa;
+    --glow:    rgba(129,140,248,0.15);
+    --glow2:   rgba(129,140,248,0.08);
+    --glass:   rgba(255,255,255,0.03);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
-    background-size: 40px 40px; pointer-events: none; z-index: 0;
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(129,140,248,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(129,140,248,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── HEADER ── */
   header {
     position: relative; z-index: 10;
-    display: flex; align-items: center; gap: 16px;
-    padding: 20px 32px; border-bottom: 1px solid var(--border);
-    background: linear-gradient(180deg, rgba(245,158,11,0.07) 0%, transparent 100%);
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 36px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(12,12,16,0.95);
+    backdrop-filter: blur(12px);
   }
-  .logo-img { width: 52px; height: 52px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(245,158,11,0.5)); }
+  .logo-img {
+    width: 44px; height: 44px; object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(129,140,248,0.4));
+  }
   .brand-name {
-    font-family: 'Orbitron', monospace; font-size: 22px; font-weight: 900; letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--amber) 0%, var(--gold) 50%, var(--copper) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    font-family: 'Orbitron', monospace;
+    font-size: 20px; font-weight: 700; letter-spacing: 1.5px;
+    color: var(--text);
   }
-  .brand-name span { -webkit-text-fill-color: #fff; }
-  .brand-sub { font-size: 10px; letter-spacing: 4px; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
-  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #3adb76; box-shadow: 0 0 8px #3adb76; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-  .status-text { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+  .brand-name .ai {
+    color: var(--accent);
+    text-shadow: 0 0 20px rgba(129,140,248,0.6);
+  }
+  .brand-sub {
+    font-size: 10px; letter-spacing: 3px; color: var(--muted);
+    text-transform: uppercase; margin-top: 2px; font-weight: 300;
+  }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .status-chip {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    background: var(--bg2);
+    font-size: 11px; color: var(--muted); letter-spacing: 0.5px;
+  }
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #34d399; box-shadow: 0 0 6px #34d399;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ── LAYOUT ── */
   .main {
     position: relative; z-index: 10;
-    display: grid; grid-template-columns: 1fr 1fr 320px;
-    gap: 24px; padding: 28px 32px; max-width: 1400px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 300px;
+    gap: 20px;
+    padding: 24px 36px;
+    max-width: 1360px;
+    margin: 0 auto;
   }
+
   .section-label {
-    font-family: 'Orbitron', monospace; font-size: 9px; letter-spacing: 3px;
-    color: var(--copper); text-transform: uppercase; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 2px; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px; font-weight: 500;
   }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── UPLOAD ── */
   .upload-zone {
-    min-height: 380px; border: 1.5px dashed var(--border); border-radius: 12px;
-    background: var(--glass); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 12px;
-    cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+    min-height: 400px;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--glass);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; cursor: pointer;
+    transition: all 0.25s; position: relative; overflow: hidden;
   }
-  .upload-zone:hover { border-color: var(--copper); box-shadow: 0 0 20px var(--glow2); }
-  .upload-zone.has-image { border-color: var(--amber); border-style: solid; }
-  .upload-zone.dragging { border-color: var(--amber); box-shadow: 0 0 30px var(--glow); }
-  .upload-icon { font-size: 42px; filter: drop-shadow(0 0 8px var(--copper)); }
-  .upload-text { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.6; }
-  .upload-text strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+  .upload-zone:hover { border-color: var(--border2); background: rgba(255,255,255,0.04); }
+  .upload-zone.has-image { border-color: var(--accent); border-style: solid; }
+  .upload-zone.dragging { border-color: var(--accent); box-shadow: 0 0 24px var(--glow); }
+  .upload-icon { font-size: 36px; opacity: 0.5; }
+  .upload-text { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7; }
+  .upload-text strong { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; font-weight: 500; }
   .upload-btn {
-    padding: 8px 20px; border: 1px solid var(--copper); border-radius: 6px;
-    background: transparent; color: var(--copper); font-family: 'Outfit', sans-serif;
-    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s;
+    padding: 8px 22px;
+    border: 1px solid var(--border2); border-radius: 6px;
+    background: transparent; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
   }
-  .upload-btn:hover { background: var(--glow2); }
-  #preview-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: none; }
+  .upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+  #preview-img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: none; }
   #file-input { display: none; }
+
+  /* ── RESULT ── */
   .result-zone {
-    min-height: 380px; border: 1.5px solid var(--border); border-radius: 12px;
-    background: var(--glass); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 12px; position: relative; overflow: hidden;
+    min-height: 400px;
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--glass);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
   }
   .result-zone::after {
-    content: 'PREVIEW'; position: absolute; top: 12px; right: 12px;
-    font-family: 'Orbitron', monospace; font-size: 8px; letter-spacing: 2px; color: var(--border);
+    content: 'OUTPUT';
+    position: absolute; top: 12px; right: 14px;
+    font-size: 9px; letter-spacing: 2px; color: var(--subtle);
   }
-  #result-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: none; }
+  #result-img { width: 100%; height: 100%; object-fit: cover; border-radius: 9px; display: none; }
   .result-placeholder { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .result-placeholder-icon { font-size: 48px; opacity: 0.3; filter: grayscale(1); }
-  .result-placeholder-text { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-align: center; }
-  .sidebar { display: flex; flex-direction: column; gap: 18px; }
+  .result-placeholder-icon { font-size: 40px; opacity: 0.2; }
+  .result-placeholder-text { font-size: 12px; color: var(--muted); text-align: center; line-height: 1.6; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
   .field { display: flex; flex-direction: column; gap: 6px; }
-  .field-label { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+  .field-label { font-size: 11px; color: var(--muted); letter-spacing: 0.5px; font-weight: 500; }
+
   .styled-select {
-    width: 100%; padding: 12px 16px;
-    background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px;
-    color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px;
+    width: 100%; padding: 11px 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
     cursor: pointer; appearance: none; -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a7055' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b85' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right 14px center;
     padding-right: 36px; transition: all 0.2s;
   }
-  .styled-select:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 12px var(--glow); }
-  .styled-select option { background: #1a1208; color: var(--text); }
-  .selection-display { background: var(--glass); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
-  .selection-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 11px; color: var(--muted); }
-  .selection-val { color: var(--amber); font-weight: 500; font-size: 12px; max-width: 160px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .generate-btn {
-    width: 100%; padding: 16px; border: none; border-radius: 10px;
-    background: linear-gradient(135deg, var(--copper) 0%, var(--amber) 100%);
-    color: #0a0604; font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
-    letter-spacing: 2px; cursor: pointer; transition: all 0.3s;
-    box-shadow: 0 4px 20px rgba(245,158,11,0.3);
+  .styled-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow2); }
+  .styled-select option { background: #14141a; color: var(--text); }
+
+  /* ── SUMMARY CARD ── */
+  .summary-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 8px;
   }
-  .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.5); }
-  .generate-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-  .loading-bar { width: 100%; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; display: none; }
+  .summary-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+  }
+  .summary-val {
+    color: var(--text); font-weight: 500; font-size: 12px;
+    max-width: 150px; text-align: right;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .summary-divider { height: 1px; background: var(--border); }
+
+  /* ── GENERATE ── */
+  .generate-btn {
+    width: 100%; padding: 14px;
+    border: none; border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(129,140,248,0.25);
+  }
+  .generate-btn:hover { background: var(--accent2); box-shadow: 0 6px 24px rgba(129,140,248,0.4); transform: translateY(-1px); }
+  .generate-btn:active { transform: translateY(0); }
+  .generate-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ── LOADING ── */
+  .loading-bar { width: 100%; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; display: none; }
   .loading-bar.active { display: block; }
   .loading-bar-fill {
-    height: 100%; background: linear-gradient(90deg, var(--copper), var(--amber), var(--copper));
-    background-size: 200% 100%; animation: shimmer 1.5s infinite; width: 40%; border-radius: 2px;
+    height: 100%; width: 40%;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: slide 1.4s infinite;
   }
-  @keyframes shimmer { 0%{background-position:-200% 0;margin-left:-40%} 100%{background-position:200% 0;margin-left:100%} }
+  @keyframes slide { 0%{margin-left:-40%} 100%{margin-left:100%} }
+
+  /* ── SAVE ── */
   .save-btn {
-    width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px;
-    background: transparent; color: var(--muted); font-family: 'Outfit', sans-serif;
-    font-size: 12px; letter-spacing: 1px; cursor: pointer; transition: all 0.2s; display: none;
+    width: 100%; padding: 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: transparent; color: var(--muted);
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    cursor: pointer; transition: all 0.2s; display: none;
   }
   .save-btn.visible { display: block; }
-  .save-btn:hover { border-color: var(--copper); color: var(--text); }
+  .save-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── TOAST ── */
   .toast {
-    position: fixed; bottom: 32px; right: 32px;
-    background: var(--bg3); border: 1px solid var(--amber); border-radius: 8px;
-    padding: 12px 20px; font-size: 13px; color: var(--text);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 20px var(--glow);
-    z-index: 1000; transform: translateY(20px); opacity: 0; transition: all 0.3s;
+    position: fixed; bottom: 28px; right: 28px;
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: 8px;
+    padding: 12px 18px; font-size: 13px; color: var(--text);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    z-index: 1000; transform: translateY(16px); opacity: 0; transition: all 0.3s;
   }
   .toast.show { transform: translateY(0); opacity: 1; }
-  ::-webkit-scrollbar { width: 5px; }
+
+  ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 </style>
 </head>
 <body>
@@ -140,32 +238,39 @@
 <header>
   <img class="logo-img" src="/logo.png" alt="Logo" onerror="this.style.display='none'">
   <div>
-    <div class="brand-name">h<span>AI</span>r Solution</div>
+    <div class="brand-name">h<span class="ai">AI</span>r Solution</div>
     <div class="brand-sub">AI Hair Transformation Studio</div>
   </div>
   <div class="header-right">
-    <div class="status-dot"></div>
-    <span class="status-text">AI READY</span>
+    <div class="status-chip">
+      <div class="status-dot"></div>
+      AI Online
+    </div>
   </div>
 </header>
 
 <div class="main">
 
+  <!-- UPLOAD -->
   <div>
-    <div class="section-label">01 — Foto Cliente</div>
+    <div class="section-label">Foto cliente</div>
     <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
       <img id="preview-img" alt="Preview">
       <div id="upload-placeholder">
         <div class="upload-icon">📷</div>
-        <div class="upload-text"><strong>Carica foto cliente</strong>JPG · PNG · WEBP</div>
+        <div class="upload-text">
+          <strong>Carica foto cliente</strong>
+          JPG · PNG · WEBP · max 10MB
+        </div>
         <button class="upload-btn" onclick="event.stopPropagation()">Sfoglia file</button>
       </div>
     </div>
     <input type="file" id="file-input" accept="image/*">
   </div>
 
+  <!-- RESULT -->
   <div>
-    <div class="section-label">03 — Anteprima AI</div>
+    <div class="section-label">Anteprima AI</div>
     <div class="result-zone">
       <img id="result-img" alt="Risultato">
       <div class="result-placeholder" id="result-placeholder">
@@ -173,12 +278,13 @@
         <div class="result-placeholder-text">Il risultato<br>apparirà qui</div>
       </div>
     </div>
-    <div class="loading-bar" id="loading-bar-side"><div class="loading-bar-fill"></div></div>
-    <button class="save-btn" id="save-btn" onclick="saveImage()">💾 &nbsp; Salva immagine sul dispositivo</button>
+    <div class="loading-bar" id="loading-bar"><div class="loading-bar-fill"></div></div>
+    <button class="save-btn" id="save-btn" onclick="saveImage()">↓ &nbsp; Salva immagine sul dispositivo</button>
   </div>
 
+  <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="section-label">02 — Seleziona Stile</div>
+    <div class="section-label">Seleziona stile</div>
 
     <div class="field">
       <div class="field-label">Taglio</div>
@@ -318,50 +424,46 @@
       </select>
     </div>
 
-    <div class="selection-display">
-      <div class="selection-row"><span>Taglio</span><span class="selection-val" id="sel-style">—</span></div>
-      <div class="selection-row"><span>Colore</span><span class="selection-val" id="sel-color">—</span></div>
-      <div class="selection-row"><span>Foto</span><span class="selection-val" id="sel-photo">—</span></div>
+    <div class="summary-card">
+      <div class="summary-row"><span>Taglio</span><span class="summary-val" id="sel-style">—</span></div>
+      <div class="summary-divider"></div>
+      <div class="summary-row"><span>Colore</span><span class="summary-val" id="sel-color">—</span></div>
+      <div class="summary-divider"></div>
+      <div class="summary-row"><span>Foto</span><span class="summary-val" id="sel-photo">—</span></div>
     </div>
 
     <button class="generate-btn" id="generate-btn" onclick="generate()" disabled>⚡ &nbsp; GENERA</button>
     <div class="loading-bar" id="loading-bar-side"><div class="loading-bar-fill"></div></div>
-    <button class="save-btn" id="save-btn" onclick="saveImage()">💾 &nbsp; Salva immagine</button>
+    <button class="save-btn" id="save-btn" onclick="saveImage()">↓ &nbsp; Salva immagine</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-let uploadedFile = null;
-let resultDataUrl = null;
+let uploadedFile = null, resultDataUrl = null;
 
 function onStyleChange() {
-  const sel = document.getElementById('select-style');
-  document.getElementById('sel-style').textContent = sel.value || '—';
+  document.getElementById('sel-style').textContent = document.getElementById('select-style').value || '—';
   checkReady();
 }
 function onColorChange() {
-  const sel = document.getElementById('select-color');
-  document.getElementById('sel-color').textContent = sel.value || '—';
+  document.getElementById('sel-color').textContent = document.getElementById('select-color').value || '—';
   checkReady();
 }
 function checkReady() {
-  const style = document.getElementById('select-style').value;
-  const color = document.getElementById('select-color').value;
-  document.getElementById('generate-btn').disabled = !(style && color && uploadedFile);
+  const ok = document.getElementById('select-style').value && document.getElementById('select-color').value && uploadedFile;
+  document.getElementById('generate-btn').disabled = !ok;
 }
 
 const fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
+  const file = e.target.files[0]; if (!file) return;
   uploadedFile = file;
   const reader = new FileReader();
   reader.onload = ev => {
     const img = document.getElementById('preview-img');
-    img.src = ev.target.result;
-    img.style.display = 'block';
+    img.src = ev.target.result; img.style.display = 'block';
     document.getElementById('upload-placeholder').style.display = 'none';
     document.getElementById('upload-zone').classList.add('has-image');
     document.getElementById('sel-photo').textContent = '✓ Caricata';
@@ -378,8 +480,7 @@ zone.addEventListener('drop', e => {
   const file = e.dataTransfer.files[0];
   if (file && file.type.startsWith('image/')) {
     const dt = new DataTransfer(); dt.items.add(file);
-    fileInput.files = dt.files;
-    fileInput.dispatchEvent(new Event('change'));
+    fileInput.files = dt.files; fileInput.dispatchEvent(new Event('change'));
   }
 });
 
@@ -388,45 +489,29 @@ async function generate() {
   const bar = document.getElementById('loading-bar-side');
   const haircutStyle = document.getElementById('select-style').value;
   const hairColor = document.getElementById('select-color').value;
-
-  btn.disabled = true;
-  btn.innerHTML = '⏳ &nbsp; Elaborazione AI...';
+  btn.disabled = true; btn.innerHTML = '⏳ &nbsp; Elaborazione...';
   bar.classList.add('active');
-
   try {
     const base64 = await fileToBase64(uploadedFile);
     const startRes = await fetch('/api/genera', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ imageBase64: base64, haircutStyle, hairColor }),
     });
     const startData = await startRes.json();
     if (startData.error) throw new Error(startData.error);
-
-    showToast('⏳ AI al lavoro... attendi qualche secondo');
+    showToast('⏳ AI al lavoro...');
     const result = await pollStatus(startData.id);
-
-    bar.classList.remove('active');
-    btn.disabled = false;
-    btn.innerHTML = '⚡ &nbsp; GENERA';
-
+    bar.classList.remove('active'); btn.disabled = false; btn.innerHTML = '⚡ &nbsp; GENERA';
     if (result.error) throw new Error(result.error);
-
     const outputUrl = Array.isArray(result.output) ? result.output[0] : result.output;
     const resultImg = document.getElementById('result-img');
-    resultImg.src = outputUrl;
-    resultImg.style.display = 'block';
-    resultImg.style.filter = 'none';
+    resultImg.src = outputUrl; resultImg.style.display = 'block';
     document.getElementById('result-placeholder').style.display = 'none';
     document.getElementById('save-btn').classList.add('visible');
     resultDataUrl = outputUrl;
-
     showToast(`✨ ${haircutStyle} · ${hairColor}`);
-
   } catch (err) {
-    bar.classList.remove('active');
-    btn.disabled = false;
-    btn.innerHTML = '⚡ &nbsp; GENERA';
+    bar.classList.remove('active'); btn.disabled = false; btn.innerHTML = '⚡ &nbsp; GENERA';
     showToast('❌ Errore: ' + err.message);
   }
 }
@@ -440,32 +525,19 @@ async function pollStatus(id) {
     if (data.status === 'failed') throw new Error('Generazione fallita');
   }
 }
-
 function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
 }
-
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
 function saveImage() {
   if (!resultDataUrl) return;
-  const a = document.createElement('a');
-  a.href = resultDataUrl;
-  a.download = `hAIr_result_${Date.now()}.jpg`;
-  a.click();
+  const a = document.createElement('a'); a.href = resultDataUrl;
+  a.download = `hAIr_result_${Date.now()}.jpg`; a.click();
   showToast('💾 Immagine salvata!');
 }
-
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3500);
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3500);
 }
 </script>
 </body>
