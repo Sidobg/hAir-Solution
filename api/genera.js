@@ -25,7 +25,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        version: "ddfc2b08d209f9fa8c1eca692712918bd449f695a2d35e9a59e52e34e23ad4e2",
+        version: "ddfc2b08d209f9fa8c1eca692712918bd449f695dabb4a958da31802a9570fe4",
         input: {
           prompt: prompt,
           input_image: imageBase64,
