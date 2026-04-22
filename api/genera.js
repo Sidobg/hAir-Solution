@@ -15,7 +15,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Dati mancanti" });
   }
 
-  // PhotoMaker richiede "img" come trigger word dopo la classe
   const prompt = `portrait photo of a woman img with ${stylePrompt}, ${colorPrompt}, photorealistic, high quality, professional salon photo, sharp focus`;
 
   try {
