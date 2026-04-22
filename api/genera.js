@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         input: {
-          image: imageBase64,
+          input_image: imageBase64,
           haircut_style: haircutStyle,
           hair_color: hairColor,
           gender: "female",
