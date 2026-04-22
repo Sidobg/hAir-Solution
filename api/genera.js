@@ -15,17 +15,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Dati mancanti" });
   }
 
-  const prompt = `portrait photo of a woman with ${stylePrompt}, ${colorPrompt}, photorealistic, high quality, professional salon photo, sharp focus`;
+  // PhotoMaker richiede "img" come trigger word dopo la classe
+  const prompt = `portrait photo of a woman img with ${stylePrompt}, ${colorPrompt}, photorealistic, high quality, professional salon photo, sharp focus`;
 
   try {
-    const response = await fetch("https://api.replicate.com/v1/predictions", {
+    const response = await fetch("https://api.replicate.com/v1/models/tencentarc/photomaker/predictions", {
       method: "POST",
       headers: {
-        "Authorization": `Token ${process.env.REPLICATE_API_TOKEN}`,
+        "Authorization": `Bearer ${process.env.REPLICATE_API_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        version: "ddfc2b08d209f9fa8c1eca692712918bd449f695a2d35e9a59e52e34e23ad4e2", // photomaker
         input: {
           prompt: prompt,
           input_image: imageBase64,
